@@ -23,6 +23,15 @@ app.use(express.static('./uploads'))
 app.use(cors({origin: '*'}))
 
 
+app.use('/api',usersRouter)
+app.use('/api',contactsRouter)
+app.use('/api',companiesRouter)
+app.use('/api',blogCategoriesRouter)
+app.use('/api',blogsRouter)
+app.use('/api',blogCategoryConnectRouter)
+
+
+
 
 
 
