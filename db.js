@@ -14,7 +14,7 @@ const { Pool } = require("pg")
 //     password: "o$n;y)_HLGwM",
 //     port: 5619
 // })
-const connectionString = 'postgres://default:JKvCT06aWrER@ep-dark-snowflake-a43k171y.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require';
+const connectionString ="postgres://default:LUfraOkC1bI0@ep-winter-wind-a4b6d8fa.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require";
 
 const pool = new Pool({
   connectionString: connectionString,

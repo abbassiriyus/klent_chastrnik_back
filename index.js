@@ -2,6 +2,17 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 
+
+// allRouter
+
+var usersRouter=require("./routes/usersRouter.js")
+var contactsRouter=require("./routes/contactsRouter.js")
+var companiesRouter=require("./routes/companiesRouter.js")
+var blogCategoriesRouter=require("./routes/blogCategoriesRouter.js")
+var blogsRouter=require("./routes/blogsRouter.js")
+var blogCategoryConnectRouter=require("./routes/blogCategoryConectRouter.js")
+
+
 const fileUpload = require("express-fileupload");
 app.use(fileUpload())
 const cors = require('cors')
