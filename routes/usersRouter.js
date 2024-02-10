@@ -168,7 +168,15 @@ router.post('/verify/check', async (req, res) => {
     if (result.rows.length > 0) {
       // Doğrulama kodu doğru
       const token = jwt.sign({ phone }, "secretKey"); // Token oluşturma
+    const query1 = 'SELECT * FROM users WHERE phone = $1';
+    const values1 = [phone];
+    const result1 = await pool.query(query1, values1);
+    if(result1.rows.length>0){
+      res.json({ valid: true, token,user:result1.rows });
+    }else{
       res.json({ valid: true, token });
+    }
+      
     } else {
       // Doğrulama kodu yanlış veya eşleşen bir kayıt bulunamadı
       res.json({ valid: false });
