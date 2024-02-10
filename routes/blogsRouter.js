@@ -49,7 +49,7 @@ router.get('/blogs', async (req, res) => {
    senddata=[]
 for (let i = 0; i < result.rows.length; i++) {
  for (let j = 0; j < result.rows[i].hash.length; j++) {
- if(result.rows[i].hash[j].blog_id==req.query.id){
+ if(result.rows[i].hash[j].category_id==req.query.id){
 senddata.push(result.rows[i])
  }
  }
