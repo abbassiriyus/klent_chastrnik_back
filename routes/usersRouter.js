@@ -39,7 +39,7 @@ router.post('/users', async (req, res) => {
       super_admin,
     ];
 
-    const result = await db.query(query, values);
+    const result = await pool.query(query, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating user:', error);
@@ -51,7 +51,7 @@ router.post('/users', async (req, res) => {
 router.get('/users', async (req, res) => {
   try {
     const query = 'SELECT * FROM users';
-    const result = await db.query(query);
+    const result = await pool.query(query);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -96,7 +96,7 @@ router.put('/users/:id', async (req, res) => {
       id,
     ];
 
-    const result = await db.query(query, values);
+    const result = await pool.query(query, values);
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error updating user:', error);
@@ -109,11 +109,22 @@ router.delete('/users/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'DELETE FROM users WHERE id = $1';
-    const result = await db.query(query, [id]);
+    const result = await pool.query(query, [id]);
     res.json({ message: 'User deleted successfully.' });
   } catch (error) {
     console.error('Error deleting user:', error);
     res.status(500).json({ error: 'An error occurred while deleting the user.' });
+  }
+});
+
+router.get('/verify', async (req, res) => {
+  try {
+    const query = 'SELECT * FROM verify';
+    const result = await pool.query(query);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching verify:', error);
+    res.status(500).json({ error: 'An error occurred while fetching verify.' });
   }
 });
 
@@ -123,8 +134,8 @@ router.post('/verify', async (req, res) => {
 
   try {
     const code = generateVerificationCode();
-    const query2 = 'SELECT * FROM verify WHERE phone = $1 AND code = $2';
-    const values2 = [phone, code];
+    const query2 = 'SELECT * FROM verify WHERE phone = $1';
+    const values2 = [phone];
     const result2= await pool.query(query2, values2);
 if(result2.rows.length==0){
 const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
@@ -132,12 +143,13 @@ const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
     const result = await pool.query(query, values);
     res.status(201).json({ id: result.rows[0].id, code });
 }else{
-  const query3 = `UPDATE contact SET code = $1,
+  const query3 = `UPDATE verify SET code = $1,
   time_update = current_timestamp WHERE id = $2 RETURNING *`;
-
+console.log(result2.rows[0]);
 const values3= [code, result2.rows[0].id];
 
-const result2 = await db.query(query3, values3);
+const result3 = await pool.query(query3, values3);
+res.status(201).json({ id: result2.rows[0].id, code });
 }
 
     
