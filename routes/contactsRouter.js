@@ -5,19 +5,20 @@ const db = require('../db');
 // Kişi oluşturma
 router.post('/contacts', async (req, res) => {
   try {
-    const { phone, company, full_name, comanda } = req.body;
+    const { phone, companiy, full_name, comanda } = req.body;
 
-    const query = `INSERT INTO contact (phone, company, full_name, comanda) 
+    console.log(req.body);
+    const query = `INSERT INTO contact (phone, companiy, full_name, comanda) 
                    VALUES ($1, $2, $3, $4) 
                    RETURNING *`;
 
-    const values = [phone, company, full_name, comanda];
+    const values = [phone, companiy, full_name, comanda];
 
     const result = await db.query(query, values);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating contact:', error);
-    res.status(500).json({ error: 'An error occurred while creating the contact.' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -37,12 +38,12 @@ router.get('/contacts', async (req, res) => {
 router.put('/contacts/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { phone, company, full_name, comanda } = req.body;
+    const { phone, companiy, full_name, comanda } = req.body;
 
-    const query = `UPDATE contact SET phone = $1, company = $2, full_name = $3, comanda = $4, 
+    const query = `UPDATE contact SET phone = $1, companiy = $2, full_name = $3, comanda = $4, 
                    time_update = current_timestamp WHERE id = $5 RETURNING *`;
 
-    const values = [phone, company, full_name, comanda, id];
+    const values = [phone, companiy, full_name, comanda, id];
 
     const result = await db.query(query, values);
     res.json(result.rows[0]);

@@ -5,13 +5,13 @@ const db = require('../db');
 // Şirket oluşturma
 router.post('/companies', async (req, res) => {
   try {
-    const { image, phone, instagram, facebook, twitter, youtube, email } = req.body;
-
-    const query = `INSERT INTO companiy (image, phone, instagram, facebook, twitter, youtube, email) 
-                   VALUES ($1, $2, $3, $4, $5, $6, $7) 
+    const { image, phone, instagram, facebook, twitter, youtube, email,address } = req.body;
+console.log(req.body);
+    const query = `INSERT INTO companiy (image, phone, instagram, facebook, twitter, youtube, email,address) 
+                   VALUES ($1, $2, $3, $4, $5, $6, $7, $8) 
                    RETURNING *`;
 
-    const values = [image, phone, instagram, facebook, twitter, youtube, email];
+    const values = [image, phone, instagram, facebook, twitter, youtube, email,address];
 
     const result = await db.query(query, values);
     res.status(201).json(result.rows[0]);
@@ -37,13 +37,13 @@ router.get('/companies', async (req, res) => {
 router.put('/companies/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { image, phone, instagram, facebook, twitter, youtube, email } = req.body;
+    const { image, phone, instagram, facebook, twitter, youtube, email,address } = req.body;
 
     const query = `UPDATE companiy SET image = $1, phone = $2, instagram = $3, 
-                   facebook = $4, twitter = $5, youtube = $6, email = $7, 
-                   time_update = current_timestamp WHERE id = $8 RETURNING *`;
+                   facebook = $4, twitter = $5, youtube = $6, email = $7, address=$8,
+                   time_update = current_timestamp WHERE id = $9 RETURNING *`;
 
-    const values = [image, phone, instagram, facebook, twitter, youtube, email, id];
+    const values = [image, phone, instagram, facebook, twitter, youtube, email,address, id];
 
     const result = await db.query(query, values);
     res.json(result.rows[0]);

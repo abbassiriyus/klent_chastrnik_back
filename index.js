@@ -11,16 +11,17 @@ var companiesRouter=require("./routes/companiesRouter.js")
 var blogCategoriesRouter=require("./routes/blogCategoriesRouter.js")
 var blogsRouter=require("./routes/blogsRouter.js")
 var blogCategoryConnectRouter=require("./routes/blogCategoryConectRouter.js")
-
-
-const fileUpload = require("express-fileupload");
-app.use(fileUpload())
 const cors = require('cors')
 const fs=require('fs')
+const fileUpload = require("express-fileupload");
+
+app.use(fileUpload())
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static('./uploads'))
 app.use(cors({origin: '*'}))
+app.use(bodyParser.urlencoded({ extended: true })); // URL-encoded verileri için
+
 
 
 app.use('/api',usersRouter)

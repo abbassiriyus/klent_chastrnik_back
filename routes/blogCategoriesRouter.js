@@ -26,6 +26,16 @@ router.get('/blog-categories', async (req, res) => {
   try {
     const query = 'SELECT * FROM blog_category';
     const result = await db.query(query);
+    const query1 = 'SELECT * FROM blog_category_connect';
+    const result1 = await db.query(query1);
+    for (let i = 0; i < result.rows.length; i++) {
+      result.rows[i].count=0
+    for (let l = 0; l < result1.rows.length; l++) {
+      if(result.rows[i].id===result1.rows[l].category_id){
+        result.rows[i].count++
+      }
+    }
+    }
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching blog categories:', error);
