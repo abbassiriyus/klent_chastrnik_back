@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
+const pool = require('../db');
+const jwt=require("jsonwebtoken")
 const { generateVerificationCode } = require('../middleware/file_upload');
 
 // Kullanıcı oluşturma
@@ -122,10 +123,24 @@ router.post('/verify', async (req, res) => {
 
   try {
     const code = generateVerificationCode();
-    const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
+    const query2 = 'SELECT * FROM verify WHERE phone = $1 AND code = $2';
+    const values2 = [phone, code];
+    const result2= await pool.query(query2, values2);
+if(result2.rows.length==0){
+const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
     const values = [phone, code];
     const result = await pool.query(query, values);
     res.status(201).json({ id: result.rows[0].id, code });
+}else{
+  const query3 = `UPDATE contact SET code = $1,
+  time_update = current_timestamp WHERE id = $2 RETURNING *`;
+
+const values3= [code, result2.rows[0].id];
+
+const result2 = await db.query(query3, values3);
+}
+
+    
   } catch (error) {
     console.error('Hata:', error);
     res.status(500).json({ error: 'Bir hata oluştu' });
@@ -134,7 +149,6 @@ router.post('/verify', async (req, res) => {
 
 router.post('/verify/check', async (req, res) => {
   const { phone, code } = req.body;
-
   try {
     const query = 'SELECT * FROM verify WHERE phone = $1 AND code = $2';
     const values = [phone, code];
