@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { generateVerificationCode } = require('../middleware/file_upload');
 
 // Kullanıcı oluşturma
 router.post('/users', async (req, res) => {
