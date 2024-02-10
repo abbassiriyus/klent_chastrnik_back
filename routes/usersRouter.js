@@ -125,9 +125,6 @@ app.post('/verify', async (req, res) => {
     const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
     const values = [phone, code];
     const result = await pool.query(query, values);
-
-    // Doğrulama kodunu telefon numarasına gönderme işlemlerini burada gerçekleştirin
-
     res.status(201).json({ id: result.rows[0].id, code });
   } catch (error) {
     console.error('Hata:', error);
