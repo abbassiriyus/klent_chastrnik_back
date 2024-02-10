@@ -31,8 +31,6 @@ router.get('/blogs', async (req, res) => {
     const result1 = await db.query(query1);
     const query2 = 'SELECT * FROM blog_category_connect';
     const result2 = await db.query(query2);
-    console.log(req.query , req.query.id);
-    console.log(req.query.id!=0);
     if(req.query && req.query.id && req.query.id!=0){
       for (let i = 0; i < result2.rows.length; i++) {
         for (let j = 0; j <result1.rows.length; j++) {
@@ -51,10 +49,8 @@ router.get('/blogs', async (req, res) => {
    senddata=[]
 for (let i = 0; i < result.rows.length; i++) {
  for (let j = 0; j < result.rows[i].hash.length; j++) {
-  console.log(result.rows[i].hash[j].blog_id,req.query.id);
  if(result.rows[i].hash[j].blog_id==req.query.id){
 senddata.push(result.rows[i])
-console.log('sss');
  }
  }
 }
@@ -73,7 +69,7 @@ for (let i = 0; i < result2.rows.length; i++) {
  }
  }
 }
-console.log("asda");
+
 senddata=result.rows
     }
 
