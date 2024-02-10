@@ -115,4 +115,43 @@ router.delete('/users/:id', async (req, res) => {
   }
 });
 
+// Telefon numarası doğrulama kodu oluşturma ve kaydetme
+app.post('/verify', async (req, res) => {
+  const { phone } = req.body;
+
+  try {
+    const code = generateVerificationCode();
+    const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
+    const values = [phone, code];
+    const result = await pool.query(query, values);
+
+    // Doğrulama kodunu telefon numarasına gönderme işlemlerini burada gerçekleştirin
+
+    res.status(201).json({ id: result.rows[0].id, code });
+  } catch (error) {
+    console.error('Hata:', error);
+    res.status(500).json({ error: 'Bir hata oluştu' });
+  }
+});
+
+app.post('/verify/check', async (req, res) => {
+  const { phone, code } = req.body;
+
+  try {
+    const query = 'SELECT * FROM verify WHERE phone = $1 AND code = $2';
+    const values = [phone, code];
+    const result = await pool.query(query, values);
+    if (result.rows.length > 0) {
+      // Doğrulama kodu doğru
+      const token = jwt.sign({ phone }, "secretKey"); // Token oluşturma
+      res.json({ valid: true, token });
+    } else {
+      // Doğrulama kodu yanlış veya eşleşen bir kayıt bulunamadı
+      res.json({ valid: false });
+    }
+  } catch (error) {
+    console.error('Hata:', error);
+    res.status(500).json({ error: 'Bir hata oluştu' });
+  }
+});
 module.exports = router;

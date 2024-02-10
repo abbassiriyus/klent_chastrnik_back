@@ -27,6 +27,14 @@ create table contact(
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
 );
+
+create table verify(
+"id" serial primary key,
+ "phone" varchar(50) not null,
+ "code" integer not null,
+  "time_create" timestamp default current_timestamp not null,
+  "time_update" timestamp default current_timestamp not null  
+)
 create table companiy(
  "id" serial primary key,
 "image" text not null,
