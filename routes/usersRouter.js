@@ -117,7 +117,7 @@ router.delete('/users/:id', async (req, res) => {
 });
 
 // Telefon numarası doğrulama kodu oluşturma ve kaydetme
-app.post('/verify', async (req, res) => {
+router.post('/verify', async (req, res) => {
   const { phone } = req.body;
 
   try {
@@ -132,7 +132,7 @@ app.post('/verify', async (req, res) => {
   }
 });
 
-app.post('/verify/check', async (req, res) => {
+router.post('/verify/check', async (req, res) => {
   const { phone, code } = req.body;
 
   try {
