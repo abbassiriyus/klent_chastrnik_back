@@ -10,6 +10,9 @@ create table users(
  "lastname" text,
  "firstname" text,
  "name" text,
+ "balanse" integer default 0 not null,
+ "komisiya" integer default 0 not null,
+ "min-komisiya" integer default 0 not null,
  "super_admin" boolean default false not null,
  "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
