@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 // allRouter
 
 var usersRouter=require("./routes/usersRouter.js")
+var lisoRouter=require("./routes/lisoRouter.js")
+
 var contactsRouter=require("./routes/contactsRouter.js")
 var companiesRouter=require("./routes/companiesRouter.js")
 var blogCategoriesRouter=require("./routes/blogCategoriesRouter.js")
@@ -25,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // URL-encoded verileri içi
 
 
 app.use('/api',usersRouter)
+app.use('/api',lisoRouter)
 app.use('/api',contactsRouter)
 app.use('/api',companiesRouter)
 app.use('/api',blogCategoriesRouter)
