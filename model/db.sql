@@ -27,8 +27,6 @@ create table contact(
   "time_create" timestamp default current_timestamp not null,
   "time_update" timestamp default current_timestamp not null
 );
-
-
 create table liso(
    "id" serial primary key,
 "title" text not null,
