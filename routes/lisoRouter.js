@@ -21,7 +21,7 @@ router.post('/liso', async (req, res) => {
   });
   
   // Read records
-  router.get('/liso', async (req, res) => {
+  router.get('/liso', async (req, res) => { 
     try {
       const query = 'SELECT * FROM liso';
   
