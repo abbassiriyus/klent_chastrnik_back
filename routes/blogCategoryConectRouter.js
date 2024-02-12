@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { validateJWT } = require('../middleware/middleware');
 
 // Blog kategori bağlantısı oluşturma
-router.post('/blog-category-connections', async (req, res) => {
+router.post('/blog-category-connections',validateJWT, async (req, res) => {
   try {
     const { blog_id, category_id } = req.body;
 
@@ -34,7 +35,7 @@ router.get('/blog-category-connections', async (req, res) => {
 });
 
 // Blog kategori bağlantısı güncelleme
-router.put('/blog-category-connections/:id', async (req, res) => {
+router.put('/blog-category-connections/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const { blog_id, category_id } = req.body;
@@ -53,7 +54,7 @@ router.put('/blog-category-connections/:id', async (req, res) => {
 });
 
 // Blog kategori bağlantısı silme
-router.delete('/blog-category-connections/:id', async (req, res) => {
+router.delete('/blog-category-connections/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'DELETE FROM blog_category_connect WHERE id = $1';

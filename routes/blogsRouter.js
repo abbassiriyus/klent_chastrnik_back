@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { validateJWT } = require('../middleware/middleware');
 
 // Blogs oluşturma
-router.post('/blogs', async (req, res) => {
+router.post('/blogs',validateJWT, async (req, res) => {
   try {
     const { title } = req.body;
 
@@ -81,7 +82,7 @@ senddata=result.rows
 });
 
 // Blogs güncelleme
-router.put('/blogs/:id', async (req, res) => {
+router.put('/blogs/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const { title } = req.body;
@@ -100,7 +101,7 @@ router.put('/blogs/:id', async (req, res) => {
 });
 
 // Blogs silme
-router.delete('/blogs/:id', async (req, res) => {
+router.delete('/blogs/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'DELETE FROM blogs WHERE id = $1';

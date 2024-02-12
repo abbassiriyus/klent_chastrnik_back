@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { validateJWT } = require('../middleware/middleware');
 
 // Kişi oluşturma
-router.post('/contacts', async (req, res) => {
+router.post('/contacts',validateJWT, async (req, res) => {
   try {
     const { phone, companiy, full_name, comanda } = req.body;
 
@@ -35,7 +36,7 @@ router.get('/contacts', async (req, res) => {
 });
 
 // Kişi güncelleme
-router.put('/contacts/:id', async (req, res) => {
+router.put('/contacts/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const { phone, companiy, full_name, comanda } = req.body;
@@ -54,7 +55,7 @@ router.put('/contacts/:id', async (req, res) => {
 });
 
 // Kişi silme
-router.delete('/contacts/:id', async (req, res) => {
+router.delete('/contacts/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'DELETE FROM contact WHERE id = $1';

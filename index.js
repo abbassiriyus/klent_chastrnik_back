@@ -12,6 +12,16 @@ var contactsRouter=require("./routes/contactsRouter.js")
 var companiesRouter=require("./routes/companiesRouter.js")
 var blogCategoriesRouter=require("./routes/blogCategoriesRouter.js")
 var blogsRouter=require("./routes/blogsRouter.js")
+var documentRouter=require("./routes/documentRouter.js")
+var hamkasbRouter=require("./routes/hamkasbRouter.js")
+var aktiRouter=require("./routes/aktiRouter.js")
+var vigruzkaRouter=require("./routes/vigruzkaRouter.js")
+var balanseRouter=require("./routes/balanseRouter.js")
+var ispolzeRouter=require("./routes/ispolzeRouter.js")
+
+
+
+
 var blogCategoryConnectRouter=require("./routes/blogCategoryConectRouter.js")
 const cors = require('cors')
 const fs=require('fs')
@@ -33,6 +43,15 @@ app.use('/api',companiesRouter)
 app.use('/api',blogCategoriesRouter)
 app.use('/api',blogsRouter)
 app.use('/api',blogCategoryConnectRouter)
+app.use('/api',hamkasbRouter)
+app.use('/api',aktiRouter)
+app.use('/api',vigruzkaRouter)
+app.use('/api',balanseRouter)
+app.use('/api',documentRouter)
+app.use('/api',ispolzeRouter)
+
+
+
 
 
 

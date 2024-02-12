@@ -5,7 +5,7 @@ const jwt=require("jsonwebtoken")
 const { generateVerificationCode } = require('../middleware/file_upload');
 
 // Kullanıcı oluşturma
-router.post('/users', async (req, res) => {
+router.post('/users',validateJWT, async (req, res) => {
   try {
     const {
       phone,
@@ -48,7 +48,7 @@ router.post('/users', async (req, res) => {
 });
 
 // Tüm kullanıcıları getirme
-router.get('/users', async (req, res) => {
+router.get('/users',validateJWT, async (req, res) => {
   try {
     const query = 'SELECT * FROM users';
     const result = await pool.query(query);
@@ -60,7 +60,7 @@ router.get('/users', async (req, res) => {
 });
 
 // Kullanıcı güncelleme
-router.put('/users/:id', async (req, res) => {
+router.put('/users/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -105,7 +105,7 @@ router.put('/users/:id', async (req, res) => {
 });
 
 // Kullanıcı silme
-router.delete('/users/:id', async (req, res) => {
+router.delete('/users/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'DELETE FROM users WHERE id = $1';

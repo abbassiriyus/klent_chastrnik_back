@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { validateJWT } = require('../middleware/middleware');
 
 // Create a new record
-router.post('/liso', async (req, res) => {
+router.post('/liso',validateJWT, async (req, res) => {
     try {
       const { title } = req.body;
   
@@ -36,7 +37,7 @@ router.post('/liso', async (req, res) => {
   });
   
   // Update a record
-  router.put('/liso/:id', async (req, res) => {
+  router.put('/liso/:id',validateJWT, async (req, res) => {
     try {
       const { id } = req.params;
       const { title } = req.body;
@@ -58,7 +59,7 @@ router.post('/liso', async (req, res) => {
   });
   
   // Delete a record
-  router.delete('/liso/:id', async (req, res) => {
+  router.delete('/liso/:id',validateJWT, async (req, res) => {
     try {
       const { id } = req.params;
   

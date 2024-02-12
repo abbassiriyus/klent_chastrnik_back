@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { validateJWT } = require('../middleware/middleware');
 
 // Blog kategorisi oluşturma
-router.post('/blog-categories', async (req, res) => {
+router.post('/blog-categories',validateJWT, async (req, res) => {
   try {
     const { title } = req.body;
 
@@ -44,7 +45,7 @@ router.get('/blog-categories', async (req, res) => {
 });
 
 // Blog kategorisi güncelleme
-router.put('/blog-categories/:id', async (req, res) => {
+router.put('/blog-categories/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const { title } = req.body;
@@ -63,7 +64,7 @@ router.put('/blog-categories/:id', async (req, res) => {
 });
 
 // Blog kategorisi silme
-router.delete('/blog-categories/:id', async (req, res) => {
+router.delete('/blog-categories/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'DELETE FROM blog_category WHERE id = $1';

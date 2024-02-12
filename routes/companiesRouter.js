@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
+const { validateJWT } = require('../middleware/middleware');
 
 // Şirket oluşturma
-router.post('/companies', async (req, res) => {
+router.post('/companies',validateJWT, async (req, res) => {
   try {
     const { image, phone, instagram, facebook, twitter, youtube, email,address } = req.body;
 console.log(req.body);
@@ -34,7 +35,7 @@ router.get('/companies', async (req, res) => {
 });
 
 // Şirket güncelleme
-router.put('/companies/:id', async (req, res) => {
+router.put('/companies/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const { image, phone, instagram, facebook, twitter, youtube, email,address } = req.body;
@@ -54,7 +55,7 @@ router.put('/companies/:id', async (req, res) => {
 });
 
 // Şirket silme
-router.delete('/companies/:id', async (req, res) => {
+router.delete('/companies/:id',validateJWT, async (req, res) => {
   try {
     const { id } = req.params;
     const query = 'DELETE FROM companiy WHERE id = $1';
