@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 const jwt=require("jsonwebtoken")
+const { validateJWT }=require("../middleware/middleware")
 const { generateVerificationCode } = require('../middleware/file_upload');
 
 // Kullanıcı oluşturma
