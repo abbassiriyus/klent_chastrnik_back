@@ -168,7 +168,7 @@ router.post('/verify2', async (req, res) => {
     const values2 = [phone];
 const result2= await pool.query(query2, values2);
 if(result2.rows.length==0){
- res.status(500).send("user topilmadi") 
+ res.status(201).send("user topilmadi") 
 }else{
 res.status(200).send("succsess")
 }  
