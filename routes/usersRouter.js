@@ -148,7 +148,6 @@ const query = 'INSERT INTO verify (phone, code) VALUES ($1, $2) RETURNING id';
   time_update = current_timestamp WHERE id = $2 RETURNING *`;
 console.log(result2.rows[0]);
 const values3= [code, result2.rows[0].id];
-
 const result3 = await pool.query(query3, values3);
 res.status(201).json({ id: result2.rows[0].id, code });
 }
