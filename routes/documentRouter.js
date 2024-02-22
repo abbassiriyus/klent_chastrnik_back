@@ -1,12 +1,13 @@
 const express = require('express');
 const pool = require('../db');
 const { validateJWT } = require('../middleware/middleware');
+const { upload_file } = require('../middleware/file_upload');
 const router = express.Router();
 // CREATE - Yangi ma'lumot qo'shish
-router.post('/documents',validateJWT, (req, res) => {
+router.post('/documents', (req, res) => {
   // Ma'lumotlarni req.body dan olish
-  const { user_id, file } = req.body;
-
+  const { user_id } = req.body;
+var file=upload_file(req)
   // Ma'lumotlar bazasiga INSERT so'rovi jo'natish
   const query = `INSERT INTO document (user_id, file) VALUES ($1, $2) RETURNING *`;
   const values = [user_id, file];
@@ -27,6 +28,22 @@ router.get('/documents', (req, res) => {
   const query = `SELECT * FROM document`;
 
   pool.query(query)
+    .then(result => {
+      res.status(200).json(result.rows);
+    })
+    .catch(error => {
+      console.error('Error fetching documents:', error);
+      res.status(500).json({ error: 'An error occurred while fetching documents.' });
+    });
+});
+
+// READ - Barcha ma'lumotlarni olish
+router.get('/documents/:id', (req, res) => {
+  var id=req.params.id
+  // Ma'lumotlarni bazadan olish
+  const query = `SELECT * FROM document  WHERE user_id = $3`;
+
+  pool.query(query,[id])
     .then(result => {
       res.status(200).json(result.rows);
     })
