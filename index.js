@@ -7,6 +7,8 @@ const bodyParser = require('body-parser');
 
 var usersRouter=require("./routes/usersRouter.js")
 var lisoRouter=require("./routes/lisoRouter.js")
+var banRouter=require("./routes/banRouter.js")
+var likeUserRouter=require("./routes/likeUserRouter.js")
 
 var contactsRouter=require("./routes/contactsRouter.js")
 var companiesRouter=require("./routes/companiesRouter.js")
@@ -49,6 +51,9 @@ app.use('/api',vigruzkaRouter)
 app.use('/api',balanseRouter)
 app.use('/api',documentRouter)
 app.use('/api',ispolzeRouter)
+app.use('/api',banRouter)
+app.use('/api',likeUserRouter)
+
 
 
 
